@@ -5,18 +5,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameObject Item;
+   
+   
     public CharacterController ch;
     public float speed = 1.5f;
+
     public Camera cam;
     public float gravity = 10f;
     public float jumpSpeed;
     public GameObject pickableObject;
-
-    public GameObject myItem;
+    public string player;
+    static GameController instance;
 
     void Start()
     {
         ch = GetComponent<CharacterController>();
+     
     }
 
 
@@ -24,25 +28,28 @@ public class PlayerController : MonoBehaviour
     void Update()
 
     {
-        float left = Input.GetAxis("Horizontal");
-  
-
-        if (ch.isGrounded)
+        if (GameController.instance.player == "player")
         {
-            jumpSpeed = 0;
-            if (Input.GetAxis("Jump") > 0) jumpSpeed = 5;
+            float left = Input.GetAxis("Horizontal");
+
+
+            if (ch.isGrounded)
+            {
+                jumpSpeed = 0;
+                if (Input.GetAxis("Jump") > 0) jumpSpeed = 5;
+
+            }
+
+            jumpSpeed -= gravity * Time.deltaTime;
+            if (left < 0) gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            if (left > 0) gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            ch.Move(new Vector3(left * speed * Time.deltaTime, jumpSpeed * Time.deltaTime, 0));
 
         }
 
-        jumpSpeed -= gravity * Time.deltaTime;
-        if (left<0)  gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-        if (left>0)  gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-        ch.Move(new Vector3(left * speed * Time.deltaTime, jumpSpeed * Time.deltaTime, 0));
-      
-        
     }
 
- 
+
 
 
 }
