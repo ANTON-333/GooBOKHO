@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pickable
+  - LadderR
+  - LadderBot
+  - LadderTop
   layers:
   - Default
   - TransparentFX
