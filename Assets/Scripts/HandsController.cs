@@ -14,6 +14,11 @@ public class HandsController : MonoBehaviour
     public float gravity = 10f;
     public float jumpSpeed;
     public GameObject pickableObject;
+    public int c;
+public int a;
+public Text texthelp2;
+    public Text texthelp3;
+    public GameObject otherObgect;
 
     public GameObject myItem;
     // Start is called before the first frame update
@@ -45,6 +50,13 @@ public class HandsController : MonoBehaviour
                 texthelp.enabled = false;
                 texthelp1.enabled = true;
             }
+            else if ((a==1) && Input.GetKeyDown(KeyCode.F))
+            {
+jumpSpeed=5;
+texthelp2.enabled=true;
+            otherObgect.transform.Translate(new Vector3(0,jumpSpeed*Time.deltaTime,0));
+ 
+            }
         }
     }
 
@@ -53,8 +65,17 @@ public class HandsController : MonoBehaviour
     {
         if (GameController.instance.player == "player")
         {
+              if (other.gameObject.CompareTag("Door") && (a==0))
+            {
+               print("hmm");
+               a=1;
+               otherObgect = other.gameObject;
+               texthelp2.enabled=true;
+               texthelp3.enabled=false;
+            }
             if (other.gameObject.CompareTag("Pickable") && myItem)
             {
+                
                 pickableObject = other.gameObject;
                 texthelp.enabled = false;
                 texthelp1.enabled = true;
@@ -65,7 +86,9 @@ public class HandsController : MonoBehaviour
                 texthelp.enabled = true;
                 texthelp1.enabled = false;
             }
+           
         }
+       
     }
 
     void OnTriggerExit(Collider other)
@@ -74,6 +97,7 @@ public class HandsController : MonoBehaviour
         {
             pickableObject = null;
             texthelp.enabled = false;
+            
         }
     }
 }

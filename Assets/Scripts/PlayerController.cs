@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     static GameController instance;
     public int c;
     public bool b;
-     public bool d;
+    public bool d;
+    public int a;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per framevoid Update()
     void Update()
     {
-        
+
         if (GameController.instance.player == "player" && (c == 0))
         {
             gameObject.transform.position = (new Vector3(transform.position.x, transform.position.y, 0));
@@ -57,50 +58,51 @@ public class PlayerController : MonoBehaviour
         }
         else if (GameController.instance.player == "dog")
             gameObject.transform.position = (new Vector3(transform.position.x, transform.position.y, 2));
-
-    
-    if (Input.GetKeyDown(KeyCode.D) && (b))
+  if (Input.GetKeyDown(KeyCode.D) && (d))
         {
-           c=0;
-Vector3 camPos = new Vector3(transform.position.x, cam.transform.position.y, transform.position.z);
-        cam.transform.position = camPos;
+            c = 0;
 
-            jumpSpeed =11;
-            ch.Move(new Vector3(0, jumpSpeed*Time.deltaTime, 0));
+
+            jumpSpeed = 11;
+            ch.Move(new Vector3(0, -jumpSpeed * Time.deltaTime, 0));
         }
-        if (Input.GetKeyDown(KeyCode.D) && (d))
+
+       if (Input.GetKeyDown(KeyCode.D) && (b))
         {
-           c=0;
+            c = 0;
+            Vector3 camPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            cam.transform.position = camPos;
 
-
-            jumpSpeed =11;
-            ch.Move(new Vector3(0, -jumpSpeed*Time.deltaTime, 0));
+            jumpSpeed = 11;
+            ch.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
         }
-            if (gameObject.transform.position.y>5)
-            {
-        Vector3 camPos = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
-        cam.transform.position = camPos;
-            }
-        else if (gameObject.transform.position.y<5)
-            {
-            
-        Vector3 camPos =( new Vector3(0,4,-8));
-        cam.transform.position = camPos;
-            }
+      
+        else if (gameObject.transform.position.y > 5)
+        {
+            Vector3 camPos = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+            cam.transform.position = camPos;
+        }
+        else if (gameObject.transform.position.y < 5)
+        {
 
-        
+            Vector3 camPos = (new Vector3(-6, 4, -8));
+            cam.transform.position = camPos;
+        }
+ 
+
+
     }
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("LadderBot"))
             b = true;
-             if (other.gameObject.CompareTag("LadderTop"))
+        if (other.gameObject.CompareTag("LadderTop"))
             d = true;
     }
-     void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-            b = false;
-            d=false;
+        b = false;
+        d = false;
     }
 }
